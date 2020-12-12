@@ -1,0 +1,1 @@
+python3 getSpreadsheetData.py spreadsheetName <pathToSpreadsheetFile.ods>
