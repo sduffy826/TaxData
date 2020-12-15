@@ -42,6 +42,22 @@ sheetColumnDictionary = {
   "breakColName"          : {"xcelName" : "Break", "tabColName" : "break", "tabColType" : "C", "nullable" : False, "required" : False}
 }
 
+# This is the old one, when I had the remapped values in a spreadsheet, it's
+# now in a table, so this isn't necessary any longer
+# --------------------------------------------------------------------------
+def getCategoryRemapSpreadsheet(fileName):
+  if os.path.exists(fileName) == False:
+    print("Category Remap Spreadsheet does not exist, exiting")
+    exit(99)
+    
+  df = read_ods(fileName,0) 
+  remapped = {}  
+  for row in range(len(df.index)):
+    theCategory = df.iloc[row,0]
+    if len(theCategory) > 0:
+      remapped[df.iloc[row,0]] = df.iloc[row,1]  # col 0 has name, col 1 has name to map to
+  return remapped  
+
 # Get summary data, we're passed in the dictionary of category remapping
 # ----------------------------------------------------------------------
 def getCategorySummaryData():
@@ -110,6 +126,31 @@ def getLivingExpenseCategories(theFile):
       
     rtnArray.append([theCategory,theFlag])
   return rtnArray
+
+# Get categories classisifed as 'living expenses', the spreadsheet should have a column
+# identifier of 'Category'
+# -------------------------------------------------------------------------------------
+def getMiscSheetData(theFile):  
+  if os.path.exists(theFile) == False:
+    print("Spreadsheet: {0} does not exist, exiting".format(theFile))
+    exit(99)
+  
+  rtnArray = []
+  df = read_ods(theFile,"Sheet1")
+  for row in range(len(df.index)):    
+    if myUtil.isNull(df.loc[row,"taxYear"]) == False:        
+      taxYear  = myUtil.formatSqlVar(df.loc[row,"taxYear"],"I",False)  # args: field, datatype (Int/Float/Char), isNullable
+      amount   = myUtil.formatSqlVar(df.loc[row,"amount"],"F",False)
+      notesRef = myUtil.formatSqlVar(df.loc[row,"Notes/ref"],"C",False) 
+      dictItem = { "taxYear" : taxYear, \
+                   "category" : df.loc[row,"category"], \
+                   "description" : df.loc[row,"description"], \
+                   "amount" : amount, \
+                   "notesRef" : notesRef }    
+      rtnArray.append(dictItem)
+    
+  return rtnArray
+
 
 # Get summary data, we're passed in the dictionary of category remapping
 # ----------------------------------------------------------------------
@@ -201,23 +242,6 @@ def getSheetDetail():
 
   return rtnArray
 
-
-# This is the old one, when I had the remapped values in a spreadsheet, it's
-# now in a table, so this isn't necessary any longer
-# --------------------------------------------------------------------------
-def getCategoryRemapSpreadsheet(fileName):
-  if os.path.exists(fileName) == False:
-    print("Category Remap Spreadsheet does not exist, exiting")
-    exit(99)
-    
-  df = read_ods(fileName,0) 
-  remapped = {}  
-  for row in range(len(df.index)):
-    theCategory = df.iloc[row,0]
-    if len(theCategory) > 0:
-      remapped[df.iloc[row,0]] = df.iloc[row,1]  # col 0 has name, col 1 has name to map to
-  return remapped  
-
 # Display help - on parms
 # -----------------------
 def help():
@@ -244,6 +268,14 @@ def procParms(listOfParms):
 
 # Just for testing, output data
 # -----------------------------
+def testDetail(numRecords2Print=99999): 
+  detailData = getSheetDetail()
+  for row in range(min(len(detailData),numRecords2Print)):
+    print("Detail record: {0}".format(str(detailData[row])))
+  return
+
+# Just for testing, output data
+# -----------------------------
 def testSummary(): 
   print(1)
   summaryData = getCategorySummaryData()  
@@ -252,14 +284,6 @@ def testSummary():
     catName      = summaryData[row][0]
     runningTotal = summaryData[row][1]
     print("cat: {0} total: {1}".format(catName,runningTotal))
-  return
-
-# Just for testing, output data
-# -----------------------------
-def testDetail(numRecords2Print=99999): 
-  detailData = getSheetDetail()
-  for row in range(min(len(detailData),numRecords2Print)):
-    print("Detail record: {0}".format(str(detailData[row])))
   return
 
 # -------------------------------------------------------------------------------------------
