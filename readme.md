@@ -12,6 +12,7 @@ Once you have all the data loaded, and you created the tax_summary table you can
 - Over the years I used different categories in the spreadsheets, to get around that I have table tax_category_remap; when the spreadsheet is read it'll remap categories to the remapped name.  This saves you from having to re-edit each spreadsheet.
 - The tax_detail table has the detail data from the spreadsheets.  
 - The tax_summary table has the summarized data for each year we have.  If you want other years you need to make some trivial changes (see DDIC section for more and for more details on the tables).
+- I added the tax_misc table, it has miscellaneous items.  Things like sep contribution, taxes bill for years (sometimes I prepaid taxes and wanted to know the bill amount), etc...
 
 ### DDIC
 ```
@@ -79,6 +80,18 @@ create table `<dbname>`.`tax_summary` (
   primary key (`id`)
 )
 ENGINE = InnoDB;
+
+drop table if exists `corti`.`tax_misc`;
+create table `corti`.`tax_misc` (
+  `id` integer not null auto_increment,
+  `taxYear` smallint not null,
+  `category` varchar(64) not null,
+  `description` varchar(128) not null,
+  `notesRef` varchar(128) not null,
+  `amount` decimal(11,2) not null,
+  primary key (`id`)
+)
+ENGINE = InnoDB;
 ```
 
 ## Some notes/details below
@@ -105,6 +118,9 @@ Insert or Delete new updateSqlCategory
 ```
 - NOTE: It will delete the data from the detail table for the year passed in
 - NOTE2: If the sheetname isn't AllDetail then pass 'sheetName <sheetName>' also
+
+### Loading/processing the Miscellaneous Spreadsheet Data
+- Use program updateSqlMisc.py, you'll see the typical commented blocks to run different routines.  Should be obvious :)
 
 ### The TAX_SUMMARY table
 - After spreadsheets detail is loaded you want to update the tax_summary table, to do that uncomment the section in updateSqlWithSummary.py so that the appropriate section is run, it's commented pretty clearly... and is toward the bottom of the file.
