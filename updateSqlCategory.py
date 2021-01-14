@@ -18,19 +18,23 @@ if __name__ == "__main__":
       print(str(rowOfData))
 
   # Insert a new category into table
-  if 1 == 0:  
+  if 1 == 1:  
     # Format: category, isExpense, reportCode (A-Accountant, P-Personal), livingExpense (Y-es S-eany...)
     # Idea is livingExpense is things that are required to live
     list2Ins = [ ["Mortgage", "Y", "A", "Y"], 
                  ["529 Fund", "Y", "A", " "], 
                  ["Dog", "Y", "P", "Y"], 
                  ["Florida House", "Y", "A", " "] ]
+    # Override var 01/11/2021 for new elelments 
+    list2Ins = [ ["Deposit - Unemployment", "N", "P", " "],
+                 ["Deposit - UPS", "N", "P", " "] ]
 
     for aRow in list2Ins:
       theCat = aRow[0]
       isExpense = aRow[1]
       reportCode = aRow[2]
-      catSql.insertCategory(theCat, isExpense, reportCode)
+      livingExp  = aRow[3]
+      catSql.insertCategory(theCat, isExpense, reportCode, livingExp)
 
   
   # Insert one item

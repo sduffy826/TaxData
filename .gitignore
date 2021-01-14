@@ -9,5 +9,8 @@ mySqlDetailSummary*
 updateSqlDetailSummary*
 playArea*
 updateByPath.py
+sample.sh
+testSheet.sh
+updateTableFromSheet.sh
 
 
