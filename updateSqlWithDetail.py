@@ -24,6 +24,7 @@ def updateDetailDataFromSpreadsheet(theYear):
   if len(theList) > 0:
     detailSql.deleteDetailRecordsForYear(theYear)
     for aRow in theList:     
+      # print("Category:{0}, Description:{1}, lineNumber:{2}".format(aRow["category"],aRow["description"],aRow["lineNumber"]))
       detailSql.insertDetailRecord(theYear, sheetName, aRow["itemDate"], aRow["description"], aRow["amount"],
                                   aRow["category"], aRow["notesRef"], aRow["notesRefSub"], aRow["source"],aRow["lineNumber"],
                                   aRow["lineSubNumber"],aRow["runningTotal"],aRow["frequency"],aRow["refOrCheckNum"],

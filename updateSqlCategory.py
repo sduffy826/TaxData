@@ -18,7 +18,7 @@ if __name__ == "__main__":
       print(str(rowOfData))
 
   # Insert a new category into table
-  if 1 == 1:  
+  if 1 == 0:  
     # Format: category, isExpense, reportCode (A-Accountant, P-Personal), livingExpense (Y-es S-eany...)
     # Idea is livingExpense is things that are required to live
     list2Ins = [ ["Mortgage", "Y", "A", "Y"], 
@@ -28,6 +28,16 @@ if __name__ == "__main__":
     # Override var 01/11/2021 for new elelments 
     list2Ins = [ ["Deposit - Unemployment", "N", "P", " "],
                  ["Deposit - UPS", "N", "P", " "] ]
+
+    # Added 01/30/2022
+    list2Ins = [ ["Amazon (Use Amazon Source)", "N", "P", "N"],
+                 ["Dividend", "N", "P", "N"],
+                 ["Withdrawal", "N", "P", "N"],
+                 ["Reinvestment", "N", "P", "N"] ]
+
+    # Added 01/30/2022
+       # Override var 01/11/2021 for new elelments 
+    list2Ins = [ ["John Geberth", "N", "P", "N"] ]
 
     for aRow in list2Ins:
       theCat = aRow[0]
@@ -40,7 +50,8 @@ if __name__ == "__main__":
   # Insert one item
   if 1 == 0:  
     # Format: category, isExpense, reportCode (A-Accountant, P-Personal), livingExpense (Y-es S-eany or blank)
-    catSql.insertCategory("Vacation", "Y", "A","N")
+    # catSql.insertCategory("Vacation", "Y", "A","N")
+    catSql.insertCategory("Social Security","N","P","")  
   
 
   # Delete a category by name
@@ -48,7 +59,8 @@ if __name__ == "__main__":
     catSql.deleteCategory("category2Delete")
 
   # Show all the categories, output of each record {id, category, isExpense, reportCode}
-  if 1 == 0:
+  if 1 == 1:
+    print("Format: id (key), Category, isExpense, reportCode (A-Accountant, P-Personal), livingExpense (Y-es S-eany...)")
     listOfCats = catSql.getCategoryList()
     for rowOfData in listOfCats:
       print(str(rowOfData))      
@@ -63,7 +75,7 @@ if __name__ == "__main__":
 
 
   # Get dictionary of categories, keys are the categories, the value for each is the category record (as dict object)
-  if 1 == 1:
+  if 1 == 0:
     listOfCategories = catSql.getCategoryDict()
     for catKey in listOfCategories:
       print("Category {0} data: {1}".format(catKey, str(listOfCategories[catKey])))

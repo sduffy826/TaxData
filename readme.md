@@ -123,6 +123,9 @@ Insert or Delete new updateSqlCategory
 - Use program updateSqlMisc.py, you'll see the typical commented blocks to run different routines.  Should be obvious :)
 
 ### The TAX_SUMMARY table
+- NOTE: You probably need to alter the tax_summary table for the year you just processed.  I used mysql workbench to do it.  You ALSO need
+        to update the mySqlSummaryTable.py program to add the new year to the array (at top of code). 
+
 - After spreadsheets detail is loaded you want to update the tax_summary table, to do that uncomment the section in updateSqlWithSummary.py so that the appropriate section is run, it's commented pretty clearly... and is toward the bottom of the file.
 
 - To output to spreadsheet, uncomment section in updateSqlWithSummary.py (string outputFile can be searched to see block :))

@@ -2,7 +2,7 @@ import mySqlRoutines as spdSql
 import mySqlCategory as catSql
 import decimal
 
-yearsOfData = [2016, 2017, 2018, 2019, 2020]
+yearsOfData = [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]
 
 def deleteSummaryRecord(category):
   spdSql.init()

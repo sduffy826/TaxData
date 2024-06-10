@@ -35,7 +35,7 @@ def updateSummaryDataFromSpreadsheet(theYear):
 if __name__ == "__main__":
   # Show the dictionary with all the years that we have defined in the dictionary, if we
   # need to store additional values just modify the table (tax_summary) and update the 
-  # dictionary in mySqlSummaryTable.py... that's all that's required
+  # array at the top of mySqlSummaryTable.py... that's all that's required
   if 1 == 0:
     print(summSql.getDictOfYearValues())
 

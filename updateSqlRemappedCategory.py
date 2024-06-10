@@ -4,7 +4,7 @@ import mySqlCategoryRemap as remapSql
 
 if __name__ == "__main__":
 
-  if 1 == 1:  # Insert a record
+  if 1 == 0:  # Insert a record
     remapSql.insertRemappedRecord("Auto - Ticket","Auto - Misc")
 
   if 1 == 1:  # Test dump data for year

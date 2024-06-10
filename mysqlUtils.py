@@ -30,6 +30,7 @@ def formatSqlVar(theVar, theType, isNullable):
       elif theType == 'F':
         newVar = 0.0
     else:  # Means the value is not null
+      # print("theVar:{0}: theType:{1}: isNullable:{2}:".format(theVar,theType,isNullable))
       newVar = theVar
       if theType == 'C':
         newVar = str(theVar)
